@@ -14,6 +14,7 @@ public class SocialGraph {
 
 	public static void updateSocialGraph(Person sender, Set<Person> recipientList){
 		logger.debug("--- updateSocialGraph ----- : "+ sender.getName());
+
 		Set<Person> existingSet = socialGraph.get(sender);
 		if(existingSet!=null){
 			existingSet.addAll(recipientList);
@@ -23,6 +24,10 @@ public class SocialGraph {
 		socialGraph.put(sender, existingSet);
 	}
 
+	/**
+	 * Return Copy of the socialGraph
+	 * @return
+	 */
 	public static Map<Person, Set<Person>> getSocialGraph(){
 		return Collections.unmodifiableMap(socialGraph);
 	}
