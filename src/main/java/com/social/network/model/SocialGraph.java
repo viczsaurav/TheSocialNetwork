@@ -11,6 +11,7 @@ public class SocialGraph {
 
 	private static final Logger logger = LoggerFactory.getLogger(SocialGraph.class);
 	private static final Map<Person, Set<Person>> socialGraph = new HashMap<>();
+	private static int numberOfNodes=-1;
 
 	public static void updateSocialGraph(Person sender, Set<Person> recipientList){
 		logger.debug("--- updateSocialGraph ----- : "+ sender.getName());
@@ -36,5 +37,15 @@ public class SocialGraph {
 		logger.debug("--- getNeighbours ---- : "+ person.getName());
 		Set<Person> existingSet = socialGraph.get(person);
 		return Collections.unmodifiableSet(existingSet==null?new HashSet<>(): existingSet);
+	}
+
+	public static int getNumberOfNodes(){
+		if(numberOfNodes<=0)
+			calculateNumberOfNodes();
+		return numberOfNodes;
+	}
+
+	private static void calculateNumberOfNodes(){
+
 	}
 }
