@@ -65,7 +65,7 @@ if __name__=='__main__':
 
 # filename                                                                        Calculated Checksum
 # ./files/corman-s/inbox/4. 0c89880b9b531738c4a66d76137f6cd1			      	=> 0c89880b9b531738b4a66d76137f6cd1
-# ./files/parks-j/sent_items/497. 04ab41e84ccb225e7b513a229a7498c1			=> 545e3c355bcf0592e4f3d35d7ef66f89
-# ./files/scott-s/all_documents/1138. d787ab9ea88d09fe56f63857c7d5f0fc 		=> 9ec77af291c45f127c40b7f01a65d806
+# ./files/parks-j/sent_items/497. 04ab41e84ccb225e7b513a229a7498c1          => 545e3c355bcf0592e4f3d35d7ef66f89
+# ./files/scott-s/all_documents/1138. d787ab9ea88d09fe56f63857c7d5f0fc          => 9ec77af291c45f127c40b7f01a65d806
 # ./files/skilling-j/sent/63. f357a671076bc46d4775271c1c14d227				=> f357a671086bc46d4775271c1c14d227
 
