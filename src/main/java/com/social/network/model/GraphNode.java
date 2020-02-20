@@ -27,13 +27,9 @@ public class GraphNode {
 	 * @param node
 	 */
 	public void connect(GraphNode node) {
-		System.out.println("----- Connect-----");
 		if (!this.equals(node)) {
-			System.out.println("----- Equal GraphNode-----");
 			this.neighbors.add(node);
 			node.neighbors.add(this);		// Since its undirected graph
-		} else{
-			System.out.println("----- Not Equal GraphNode-----");
 		}
 	}
 

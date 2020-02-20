@@ -3,6 +3,9 @@ package com.social.network.main;
 import com.social.network.model.SocialGraph;
 import com.social.network.utils.EMLParser;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,9 +14,9 @@ import java.util.Set;
  */
 public class ApplicationMain {
 
-	public static void main(String[] args) {
-		String path= "/Users/sverma/Projects/personal/TheSocialNetwork/src/main/resources/sample.eml";
-		setup();
+	public static void main(String[] args) throws Exception{
+		ApplicationMain main = new ApplicationMain();
+		main.setup();
 		SocialGraph.getSocialGraph()
 						.stream().forEach(p ->
 						System.out.println(p.getValue().getName()+","+ p.getNeighbors().size()));
@@ -21,9 +24,9 @@ public class ApplicationMain {
 		System.out.println(SocialGraph.getSocialNetworkSize());
 	}
 
-	private static void setup() {
+	private void setup() throws Exception{
 		// TODO Think about threads
-		Set<String> fileList = getFileList();
+		Set<String> fileList = this.getFileList();
 		fileList.forEach(path -> {
 			try{
 				EMLParser emlParse = new EMLParser(path);
@@ -36,11 +39,22 @@ public class ApplicationMain {
 		});
 	}
 
-	private static Set<String> getFileList(){
-		String path= "/Users/sverma/Documents/saurav-verma/data/downloaded-1/_files_allen-p__sent_mail_100061657796e7237e0f4aa2c25135ece310";
-
+	private Set<String> getFileList() throws Exception {
+		String basePath = "/Users/sverma/Documents/saurav-verma/data/downloaded-1/";
+		String downloadedFileNameList ="downloaded-1.txt";
 		Set<String> fileList =  new HashSet<>();
-		fileList.add(path);
+
+		File file = new File(
+						getClass().getClassLoader().getResource(downloadedFileNameList).getFile()
+		);
+
+		try (FileReader reader = new FileReader(file);
+				 BufferedReader br = new BufferedReader(reader)) {
+					String fileName;
+					while ((fileName = br.readLine()) != null) {
+						fileList.add(basePath+fileName);
+			}
+		}
 		return fileList;
 	}
 }

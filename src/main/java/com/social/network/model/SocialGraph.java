@@ -15,11 +15,9 @@ public class SocialGraph {
 		GraphNode senderNode = new GraphNode(sender);
 		socialGraph.add(senderNode);
 		for (Person receiver: recipientList) {
-			System.out.println("Sender: "+sender.getName()+ ", receiver: "+ receiver.getEmail());
 			GraphNode recipientNode = new GraphNode(receiver);
 			recipientNode.connect(senderNode);
 			socialGraph.add(recipientNode);
-			System.out.println("---------------");
 		};
 	}
 

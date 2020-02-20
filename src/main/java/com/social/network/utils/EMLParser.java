@@ -2,7 +2,6 @@ package com.social.network.utils;
 
 
 import com.social.network.model.Person;
-import com.social.network.model.SocialGraph;
 
 import javax.mail.Address;
 import javax.mail.Header;
@@ -68,7 +67,7 @@ public class EMLParser {
 									.filter(str -> (
 													str.split("@").length == 1 ||							// Email IDs are allowed as Name
 													(str.split("@").length == 2 &&
-													str.split("@")[1].equals("enron.com")))		// Weeding name with `@` signature
+													str.split("@")[1].equals("enron.com")))		// TODO recipient can have just email ID like hotmail.com
 									)
 									.collect(Collectors.toList());
 				}
