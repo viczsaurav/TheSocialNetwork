@@ -54,6 +54,7 @@ public class EMLParser {
 							.map(Address::toString)
 							.collect(Collectors.toList());
 
+			// The `NAME` details are only part of Mime Headers
 			for (Enumeration<Header> e = mime.getAllHeaders(); e.hasMoreElements(); ) {
 				Header h = e.nextElement();
 				// Get the Sender Name
@@ -65,18 +66,15 @@ public class EMLParser {
 					recipientNames = Arrays.asList(h.getValue().split(","))
 									.stream().map(String::trim)
 									.filter(str -> (
-													str.split("@").length == 1 ||
-																	(str.split("@").length == 2 &&
-																					str.split("@")[1].equals("enron.com")))
+													str.split("@").length == 1 ||							// Email IDs are allowed as Name
+													(str.split("@").length == 2 &&
+													str.split("@")[1].equals("enron.com")))		// Weeding name with `@` signature
 									)
 									.collect(Collectors.toList());
 				}
 			}
 			this.sender = new Person(senderName, senderEmail);
 			this.recipientList = Person.getPersonList(recipientNames, recipientEmails);
-
-			// After processing each email, the SocialGraph must be updated
-			SocialGraph.updateSocialGraph(sender, recipientList);
 		}
 		catch (Exception e){
 			System.out.println("Error while reading the eml file: "+ path +"\n"+ e.getMessage());

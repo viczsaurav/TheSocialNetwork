@@ -1,51 +1,41 @@
 package com.social.network.model;
 
-import java.util.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The class represents the Social Graph representation of all users using Adjacency List
  */
 public class SocialGraph {
 
-	private static final Logger logger = LoggerFactory.getLogger(SocialGraph.class);
-	private static final Map<Person, Set<Person>> socialGraph = new HashMap<>();
-	private static int numberOfNodes=-1;
+	private static final Set<GraphNode> socialGraph = new HashSet<>();
 
 	public static void updateSocialGraph(Person sender, Set<Person> recipientList){
-		logger.debug("--- updateSocialGraph ----- : "+ sender.getName());
-
-		Set<Person> existingSet = socialGraph.get(sender);
-		if(existingSet!=null){
-			existingSet.addAll(recipientList);
-		} else {
-			existingSet = recipientList;
-		}
-		socialGraph.put(sender, existingSet);
+		GraphNode senderNode = new GraphNode(sender);
+		socialGraph.add(senderNode);
+		for (Person receiver: recipientList) {
+			System.out.println("Sender: "+sender.getName()+ ", receiver: "+ receiver.getEmail());
+			GraphNode recipientNode = new GraphNode(receiver);
+			recipientNode.connect(senderNode);
+			socialGraph.add(recipientNode);
+			System.out.println("---------------");
+		};
 	}
 
 	/**
 	 * Return Copy of the socialGraph
 	 * @return
 	 */
-	public static Map<Person, Set<Person>> getSocialGraph(){
-		return Collections.unmodifiableMap(socialGraph);
+	public static Set<GraphNode> getSocialGraph(){
+		return Collections.unmodifiableSet(socialGraph);
 	}
 
-	public static Set<Person> getNeighbours(Person person){
-		logger.debug("--- getNeighbours ---- : "+ person.getName());
-		Set<Person> existingSet = socialGraph.get(person);
-		return Collections.unmodifiableSet(existingSet==null?new HashSet<>(): existingSet);
-	}
-
-	public static int getNumberOfNodes(){
-		if(numberOfNodes<=0)
-			calculateNumberOfNodes();
-		return numberOfNodes;
-	}
-
-	private static void calculateNumberOfNodes(){
-
+	/**
+	 * Return size of the network
+	 * @return
+	 */
+	public static int getSocialNetworkSize(){
+		return socialGraph.size();
 	}
 }
