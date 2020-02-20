@@ -75,7 +75,7 @@ public class EMLParser {
 			this.sender = new Person(senderName, senderEmail);
 			this.recipientList = Person.getPersonList(recipientNames, recipientEmails);
 
-			// After processing eacah email, the SocialGraph must be updated
+			// After processing each email, the SocialGraph must be updated
 			SocialGraph.updateSocialGraph(sender, recipientList);
 		}
 		catch (Exception e){

@@ -55,6 +55,10 @@ if __name__=='__main__':
 ### Output
 # Original: 517401
 # Downloaded: 517399
+#
+# missing files:
+# ./files/panus-s/inbox/30. 6957ce3c0c3af075c64d29f8eccbdcfb
+# ./files/guzman-m/notes_inbox/1710. 720920bfb7f316073008cf90b1221268
 # ---------------------------
 # Checksum validation failed for following files:
 
