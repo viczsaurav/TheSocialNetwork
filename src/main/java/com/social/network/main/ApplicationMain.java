@@ -20,6 +20,7 @@ public class ApplicationMain {
 
 	// For Writer
 	private static String outputEdgeListFilename;
+	private static String failedFiles;
 
 	private static ClassLoader classLoader;
 
@@ -32,16 +33,15 @@ public class ApplicationMain {
 		downloadedFileName = configMap.get("downloaded.fileName");
 		blacklistFilename = configMap.get("blacklist.filename");
 		outputEdgeListFilename = configMap.get("output.edge-list.filename");
+		failedFiles = configMap.get("failed.files");
 
 		if (downloadedFilePath==null || downloadedFileName==null ||
 						blacklistFilename==null || outputEdgeListFilename==null){
-			throw new Exception("Please check the config file.. inputs missing..");s
+			throw new Exception("Please check the config file.. inputs missing..");
 		}
-
-		main.setup(configMap);
-
-		System.out.println("Size of Network : "+ SocialGraph.getSocialNetworkSize());
-		Utilities.writeEdgesToFile(SocialGraph.getSocialGraph(), outputEdgeListFilename);
+			main.setup(configMap);
+			System.out.println("Size of Network : "+ SocialGraph.getSocialNetworkSize());
+			Utilities.writeEdgesToFile(SocialGraph.getSocialGraph(), outputEdgeListFilename);
 	}
 
 	private void setup(Map<String, String> configMap) throws Exception{
@@ -62,7 +62,7 @@ public class ApplicationMain {
 				}
 			}
 			catch (Exception e){
-				System.out.println("\nFile Failed: "+ path + "\n Error: " + e.getMessage());
+				System.out.println("\nFile processing Failed: "+ path + "\n Error: " + e.getMessage());
 			}
 		});
 	}

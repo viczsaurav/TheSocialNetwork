@@ -62,4 +62,13 @@ public class Utilities {
 		outputStream.close();
 
 	}
+
+	public static void writeToFile(String filename, String writePath) throws Exception{
+		try(FileOutputStream fos = new FileOutputStream(writePath, true);){
+			fos.write((filename+"\n").getBytes());
+		}
+		catch(Exception e){
+			System.out.println("Error writing to failed-files");
+		}
+	}
 }

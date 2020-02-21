@@ -4,11 +4,12 @@ package com.social.network.utils;
 import com.social.network.model.Person;
 
 import javax.mail.Address;
-import javax.mail.Header;
 import javax.mail.internet.MimeMessage;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -18,9 +19,10 @@ public class EMLParser {
 	private Set<Person> recipientList;
 
 	public EMLParser(String path) throws Exception{
+		this.recipientList = new HashSet<>();
 		this.readEMLFile(path);
-	}
 
+	}
 
 	/**
 	 * return Sender
@@ -40,44 +42,23 @@ public class EMLParser {
 	 * @throws Exception
 	 */
 	private void readEMLFile(String path) throws Exception{
-		try {
-			InputStream is = new FileInputStream(path);
+		try(InputStream is = new FileInputStream(path)) {
 			MimeMessage mime = new MimeMessage(null, is);
 
-			String senderName=null;
 			String senderEmail = mime.getFrom()[0].toString();
+			Address[] recipients = mime.getAllRecipients();
+			sender = new Person(senderEmail);
 
-			List<String> recipientNames = new ArrayList<>();
-			List<String> recipientEmails = Arrays.asList(mime.getAllRecipients())
-							.stream()
-							.map(Address::toString)
-							.collect(Collectors.toList());
-
-			// The `NAME` details are only part of Mime Headers
-			for (Enumeration<Header> e = mime.getAllHeaders(); e.hasMoreElements(); ) {
-				Header h = e.nextElement();
-				// Get the Sender Name
-				if (h.getName().equals("X-From")) {
-					senderName = h.getValue();
-				}
-				// Get list of recipient Name
-				if (h.getName().equals("X-To")) {
-					recipientNames = Arrays.asList(h.getValue().split(","))
-									.stream().map(String::trim)
-									.filter(str -> (
-													str.split("@").length == 1 ||							// Email IDs are allowed as Name
-													(str.split("@").length == 2 &&
-													str.split("@")[1].contains(".co")))		// TODO Check other filter condition
-									)
-									.collect(Collectors.toList());
-				}
-			}
-			this.sender = new Person(senderName, senderEmail);
-			this.recipientList = Person.getPersonList(recipientNames, recipientEmails);
+			if(recipients!=null)
+				recipientList = Arrays.asList(recipients)
+								.stream()
+								.map(Address::toString)
+								.map(obj -> new Person(obj))
+								.collect(Collectors.toSet());
 		}
 		catch (Exception e){
-			System.out.println("Error while reading the eml file: "+ path +"\n"+ e.getMessage());
-			throw e;
+			System.out.println("Failed to parse eml file: "+ path +"\n"+ e.getMessage());
+			Utilities.writeToFile(path, "/Users/sverma/Documents/saurav-verma/data/outputs/failed-files.txt");
 		}
 	}
 }
