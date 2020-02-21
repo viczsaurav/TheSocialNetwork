@@ -67,7 +67,7 @@ public class EMLParser {
 									.filter(str -> (
 													str.split("@").length == 1 ||							// Email IDs are allowed as Name
 													(str.split("@").length == 2 &&
-													str.split("@")[1].contains(".co")))		// TODO recipient can have just email ID like hotmail.com
+													str.split("@")[1].contains(".co")))		// TODO Check other filter condition
 									)
 									.collect(Collectors.toList());
 				}
