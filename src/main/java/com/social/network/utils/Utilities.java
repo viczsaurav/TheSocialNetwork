@@ -71,4 +71,8 @@ public class Utilities {
 			System.out.println("Error writing to failed-files");
 		}
 	}
+	public static boolean isValidEmail(String email) {
+		String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+		return email.matches(regex);
+	}
 }

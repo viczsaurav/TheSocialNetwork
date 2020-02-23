@@ -12,8 +12,11 @@ public class SocialGraph {
 	private static final Set<GraphNode> socialGraph = new HashSet<>();
 
 	public static void updateSocialGraph(Person sender, Set<Person> recipientList){
+		//Process sender
 		GraphNode senderNode = new GraphNode(sender);
 		socialGraph.add(senderNode);
+
+		//Process recipientList
 		for (Person receiver: recipientList) {
 			GraphNode recipientNode = new GraphNode(receiver);
 			recipientNode.connect(senderNode);

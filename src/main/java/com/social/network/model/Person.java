@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * This Person class represents a Node in the Social Network graph.
- * Each person has name, email properties and connections(neighbours)
+ * Each person has email. This can be extended to include name and secondary email property.
  */
 public class Person {
 
