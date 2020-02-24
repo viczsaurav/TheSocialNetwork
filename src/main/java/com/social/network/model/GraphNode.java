@@ -34,7 +34,7 @@ public class GraphNode {
 	}
 
 	/**
-	 * Merge Nodes if
+	 * Merge Nodes if the next email is not present in existing node
 	 * @param node
 	 */
 	public void merge(GraphNode node) {
