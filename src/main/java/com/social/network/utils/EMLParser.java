@@ -62,7 +62,7 @@ public class EMLParser {
 
 			String senderName="";
 			List<String> recipientNames = new ArrayList<>();
-			for (Enumeration<Header> e = mime.getAllHeaders(); e.hasMoreElements(); ) {
+			for (Enumeration<Header> e = mime.getAllHeaders(); e.hasMoreElements();) {
 					Header h = e.nextElement();
 					// Get the Sender Name
 					if (h.getName().equals("X-From")) {
@@ -71,12 +71,12 @@ public class EMLParser {
 					// Get list of recipient Name
 					 if (h.getName().equals("X-To")) {
 							recipientNames = Arrays.asList(h.getValue().split(","))
-																			.stream().map(String::trim)
-																			.filter(str -> (
-																							str.split("@").length == 1 ||  // Either Name
-																							(Utilities.isValidEmail(str)))       // Email IDs are allowed as Name
+											.stream().map(String::trim)
+											.filter(str -> (
+															str.split("@").length == 1 ||			//Either mail
+																			(Utilities.isValidEmail(str)))  // Email IDs are allowed as Name
 									 )
-									.collect(Collectors.toList());
+											.collect(Collectors.toList());
 					}
 			}
 			this.sender = new Person(senderName, senderEmail);
