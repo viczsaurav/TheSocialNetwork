@@ -46,14 +46,12 @@ public class EMLParser {
 
 			String senderEmail = mime.getFrom()[0].toString();
 			Address[] recipients = mime.getAllRecipients();
-//			sender = new Person(senderEmail);
 
 			List<String> recipientEmails = new ArrayList<>();
 			if(recipients!=null)
 				recipientEmails = Arrays.asList(recipients)
 								.stream()
 								.map(Address::toString)
-//								.map(obj -> new Person(obj))
 								.collect(Collectors.toList());
 
 			/**
