@@ -46,10 +46,10 @@ public class Utilities {
 
 		FileOutputStream outputStream = new FileOutputStream(outputEdgeListFilename);
 		socialGraph.stream().forEach(node -> {
-			String sender = node.getValue().getEmail();
+			String sender = node.getValue().getEmails().toString();
 			node.getNeighbors()
 							.forEach(receiver ->{
-								String edge = sender + "," +receiver.getValue().getEmail() + "\n";
+								String edge = sender + "," +receiver.getValue().getEmails().toString() + "\n";
 								byte[] strToBytes = edge.getBytes();
 								try{
 									outputStream.write(strToBytes);

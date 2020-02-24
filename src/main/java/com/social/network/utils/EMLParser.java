@@ -46,14 +46,15 @@ public class EMLParser {
 
 			String senderEmail = mime.getFrom()[0].toString();
 			Address[] recipients = mime.getAllRecipients();
-			sender = new Person(senderEmail);
+//			sender = new Person(senderEmail);
 
+			List<String> recipientEmails = new ArrayList<>();
 			if(recipients!=null)
-				recipientList = Arrays.asList(recipients)
+				recipientEmails = Arrays.asList(recipients)
 								.stream()
 								.map(Address::toString)
-								.map(obj -> new Person(obj))
-								.collect(Collectors.toSet());
+//								.map(obj -> new Person(obj))
+								.collect(Collectors.toList());
 
 			/**
 			 * If there are multiple emails for same person, we assume `Name` as the unique.
@@ -61,27 +62,27 @@ public class EMLParser {
 			 * So below we extract Names for both sender and recipient.
 			 */
 
-//				String senderName="";
-//				List<String> recipientNames = new ArrayList<>();
-//				for (Enumeration<Header> e = mime.getAllHeaders(); e.hasMoreElements(); ) {
-//						Header h = e.nextElement();
-//						// Get the Sender Name
-//						if (h.getName().equals("X-From")) {
-//										senderName = h.getValue();
-//						}
-//						// Get list of recipient Name
-//						 if (h.getName().equals("X-To")) {
-//								recipientNames = Arrays.asList(h.getValue().split(","))
-//																				.stream().map(String::trim)
-//																				.filter(str -> (
-//																								str.split("@").length == 1 ||  // Either Name
-//																								(Utilities.isValidEmail(str)))       // Email IDs are allowed as Name
-//										 )
-//										.collect(Collectors.toList());
-//						}
-//				}
-//				this.sender = new Person(senderName, senderEmail);
-//				this.recipientList = Person.getPersonList(recipientNames, recipientEmails);
+				String senderName="";
+				List<String> recipientNames = new ArrayList<>();
+				for (Enumeration<Header> e = mime.getAllHeaders(); e.hasMoreElements(); ) {
+						Header h = e.nextElement();
+						// Get the Sender Name
+						if (h.getName().equals("X-From")) {
+										senderName = h.getValue();
+						}
+						// Get list of recipient Name
+						 if (h.getName().equals("X-To")) {
+								recipientNames = Arrays.asList(h.getValue().split(","))
+																				.stream().map(String::trim)
+																				.filter(str -> (
+																								str.split("@").length == 1 ||  // Either Name
+																								(Utilities.isValidEmail(str)))       // Email IDs are allowed as Name
+										 )
+										.collect(Collectors.toList());
+						}
+				}
+				this.sender = new Person(senderName, senderEmail);
+				this.recipientList = Person.getPersonList(recipientNames, recipientEmails);
 
 		}
 		catch (Exception e){

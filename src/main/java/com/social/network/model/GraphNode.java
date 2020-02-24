@@ -33,6 +33,18 @@ public class GraphNode {
 		}
 	}
 
+	/**
+	 * Merge Nodes if
+	 * @param node
+	 */
+	public void merge(GraphNode node) {
+		Set<String> emails = node.value.getEmails();
+		if (this.equals(node) &&
+						!this.value.getEmails().stream().anyMatch(emails::contains)){
+				this.value.mergeEmails(emails);
+		}
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
