@@ -4,6 +4,7 @@ import com.social.network.model.GraphNode;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Utilities {
 
@@ -46,10 +47,10 @@ public class Utilities {
 
 		FileOutputStream outputStream = new FileOutputStream(outputEdgeListFilename);
 		socialGraph.stream().forEach(node -> {
-			String sender = node.getValue().getEmails().toString();
+			String sender = (String) node.getValue().getEmails().toArray()[0];
 			node.getNeighbors()
 							.forEach(receiver ->{
-								String edge = sender + "," +receiver.getValue().getEmails().toString() + "\n";
+								String edge = sender + "," + receiver.getValue().getEmails().toArray()[0]+ "\n";
 								byte[] strToBytes = edge.getBytes();
 								try{
 									outputStream.write(strToBytes);
@@ -74,5 +75,9 @@ public class Utilities {
 	public static boolean isValidEmail(String email) {
 		String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 		return email.matches(regex);
+	}
+
+	public static String listToString(Set<String> input, String delimiter){
+		return input.stream().collect(Collectors.joining(delimiter));
 	}
 }

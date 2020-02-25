@@ -17,12 +17,16 @@ public class Person {
 		this.emails.add(email);
 	}
 
+	public String getName(){
+		return this.name;
+	}
 	public Set<String> getEmails() {
 		return Collections.unmodifiableSet(emails);
 	}
 
-	public void mergeEmails(Set<String> email){
-		this.emails.addAll(emails);
+	public void mergeEmails(Person node){
+		this.emails.addAll(node.getEmails());
+		node.emails.addAll(this.getEmails());
 	}
 
 		/**

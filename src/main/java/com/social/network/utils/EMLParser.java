@@ -68,15 +68,15 @@ public class EMLParser {
 					if (h.getName().equals("X-From")) {
 									senderName = h.getValue();
 					}
-					// Get list of recipient Name
-					 if (h.getName().equals("X-To")) {
-							recipientNames = Arrays.asList(h.getValue().split(","))
-											.stream().map(String::trim)
-											.filter(str -> (
-															str.split("@").length == 1 ||			//Either mail
-																			(Utilities.isValidEmail(str)))  // Email IDs are allowed as Name
-									 )
-											.collect(Collectors.toList());
+					// Get list of recipient Name from X-To
+					else if (h.getName().equals("X-To") || h.getName().equals("X-cc")) {
+						recipientNames.addAll(Arrays.asList(h.getValue().split(","))
+										.stream().map(String::trim)
+										.filter(str -> (
+														str.length()> 0 && (str.split("@").length == 1 ||			//Either mail
+																		(Utilities.isValidEmail(str))))  // Email IDs are allowed as Name
+										)
+										.collect(Collectors.toList()));
 					}
 			}
 			this.sender = new Person(senderName, senderEmail);

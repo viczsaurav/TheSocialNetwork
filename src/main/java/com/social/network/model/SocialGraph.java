@@ -1,6 +1,9 @@
 package com.social.network.model;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The class represents the Social Graph representation of all users using Adjacency List
@@ -8,7 +11,6 @@ import java.util.*;
 public class SocialGraph {
 
 	private static final Map<GraphNode, GraphNode> socialGraph = new HashMap<>();
-//	private static final Set<GraphNode> socialGraph = new HashSet<>();
 
 	public static void updateSocialGraph(Person sender, Set<Person> recipientList){
 		//Process sender
@@ -21,9 +23,13 @@ public class SocialGraph {
 		//Process recipientList
 		for (Person receiver: recipientList) {
 			GraphNode recipientNode = new GraphNode(receiver);
+			if (socialGraph.containsKey(recipientNode)){
+				recipientNode.merge(socialGraph.get(recipientNode));
+			}
 			recipientNode.connect(senderNode);
 			socialGraph.put(recipientNode, recipientNode);
-		};
+		}
+
 	}
 
 	/**

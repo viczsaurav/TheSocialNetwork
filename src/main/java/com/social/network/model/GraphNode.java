@@ -41,7 +41,7 @@ public class GraphNode {
 		Set<String> emails = node.value.getEmails();
 		if (this.equals(node) &&
 						!this.value.getEmails().stream().anyMatch(emails::contains)){
-				this.value.mergeEmails(emails);
+				this.value.mergeEmails(node.value);
 		}
 	}
 

@@ -44,6 +44,7 @@ public class ApplicationMain {
 			Utilities.writeEdgesToFile(SocialGraph.getSocialGraph(), outputEdgeListFilename);
 	}
 
+
 	private void setup() throws Exception{
 
 		File blackListFile = new File(classLoader.getResource(blacklistFilename).getFile());
