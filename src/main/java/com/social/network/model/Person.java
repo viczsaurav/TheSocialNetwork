@@ -18,25 +18,6 @@ public class Person {
 		return email;
 	}
 
-//	/**
-//	 * Create List of person objects when Name and email list provided in same order
-//	 * @param emails
-//	 * @return
-////	 */
-//	public static Set<Person> getPersonList(List<String> names, List<String> emails) {
-//		List<Person> listOfPersons= new ArrayList<>();
-//
-//		if(names.size()!= emails.size()){
-//			throw new IllegalArgumentException("Mismatch in size of Sets.. " +
-//							"namesArray=["+names.size()+"], emailsArray=["+emails.size()+"]");
-//		}
-//
-//		for(int i=0; i< names.size();i++){
-//			listOfPersons.add(new Person(names.get(i), emails.get(i)));
-//		}
-//		return new HashSet<>(listOfPersons);
-//	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

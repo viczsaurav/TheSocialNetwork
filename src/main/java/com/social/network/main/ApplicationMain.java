@@ -39,12 +39,12 @@ public class ApplicationMain {
 						blacklistFilename==null || outputEdgeListFilename==null){
 			throw new Exception("Please check the config file.. inputs missing..");
 		}
-			main.setup(configMap);
+			main.setup();
 			System.out.println("Size of Network : "+ SocialGraph.getSocialNetworkSize());
 			Utilities.writeEdgesToFile(SocialGraph.getSocialGraph(), outputEdgeListFilename);
 	}
 
-	private void setup(Map<String, String> configMap) throws Exception{
+	private void setup() throws Exception{
 
 		File blackListFile = new File(classLoader.getResource(blacklistFilename).getFile());
 		Set<String> blackList = Utilities.getFileList(blackListFile, downloadedFilePath);
