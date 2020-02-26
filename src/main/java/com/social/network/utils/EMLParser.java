@@ -41,24 +41,27 @@ public class EMLParser {
 	 * @throws Exception
 	 */
 	private void readEMLFile(String path) throws Exception{
+		String emailMatch = "enron.com";
 		try(InputStream is = new FileInputStream(path)) {
 			MimeMessage mime = new MimeMessage(null, is);
 
 			String senderEmail = mime.getFrom()[0].toString();
-			Address[] recipients = mime.getAllRecipients();
-			sender = new Person(senderEmail);
+			if (senderEmail.contains(emailMatch) && Utilities.isValidEmail(senderEmail)) {
+				Address[] recipients = mime.getAllRecipients();
+				sender = new Person(senderEmail);
 
-			if(recipients!=null)
-				recipientList = Arrays.asList(recipients)
-								.stream()
-								.map(Address::toString)
-								.map(obj -> new Person(obj))
-								.collect(Collectors.toSet());
-
+				if(recipients!=null)
+					recipientList = Arrays.asList(recipients)
+									.stream()
+									.map(Address::toString)
+									.filter(email -> email.contains(emailMatch))
+									.map(email -> new Person(email))
+									.collect(Collectors.toSet());
+			}
 		}
 		catch (Exception e){
 			System.out.println("Failed to parse eml file: "+ path +"\n"+ e.getMessage());
-			Utilities.writeToFile(path, "/Users/sverma/Documents/saurav-verma/data/outputs/failed-files.txt");
+			Utilities.writeToFile(path, "/Users/sverma/Documents/saurav-verma/data/outputs-2/failed-files.txt");
 		}
 	}
 }
