@@ -29,7 +29,6 @@ public class SocialGraph {
 			recipientNode.connect(senderNode);
 			socialGraph.put(recipientNode, recipientNode);
 		}
-
 	}
 
 	/**

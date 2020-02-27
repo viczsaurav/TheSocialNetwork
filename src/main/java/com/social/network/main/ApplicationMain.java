@@ -44,7 +44,6 @@ public class ApplicationMain {
 			Utilities.writeEdgesToFile(SocialGraph.getSocialGraph(), outputEdgeListFilename);
 	}
 
-
 	private void setup() throws Exception{
 
 		File blackListFile = new File(classLoader.getResource(blacklistFilename).getFile());
@@ -59,7 +58,13 @@ public class ApplicationMain {
 				if (!blackList.contains(path)){
 					// Read email and update social graph
 					EMLParser emlParse = new EMLParser(path);
-					SocialGraph.updateSocialGraph(emlParse.getSender(), emlParse.getRecipientList());
+
+					if (emlParse.getSender()!=null && emlParse.getRecipientList().size()>0){
+						SocialGraph.updateSocialGraph(emlParse.getSender(), emlParse.getRecipientList());
+					}
+					else {
+						System.out.println("No employee mail found, skipping file: "+ path);
+					}
 				}
 			}
 			catch (Exception e){

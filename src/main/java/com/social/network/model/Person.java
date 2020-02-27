@@ -23,17 +23,17 @@ public class Person {
 	public Set<String> getEmails() {
 		return Collections.unmodifiableSet(emails);
 	}
-
+  
 	public void mergeEmails(Person node){
 		this.emails.addAll(node.getEmails());
 		node.emails.addAll(this.getEmails());
 	}
 
-		/**
+	/**
 	 * Create List of person objects when Name and email list provided in same order
 	 * @param emails
 	 * @return
-//	 */
+	 */
 	public static Set<Person> getPersonList(List<String> names, List<String> emails) {
 		List<Person> listOfPersons= new ArrayList<>();
 

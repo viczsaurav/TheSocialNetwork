@@ -76,7 +76,7 @@ public class Utilities {
 		String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 		return email.matches(regex);
 	}
-
+  
 	public static String listToString(Set<String> input, String delimiter){
 		return input.stream().collect(Collectors.joining(delimiter));
 	}
