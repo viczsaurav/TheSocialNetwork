@@ -21,7 +21,7 @@ public class SocialGraph {
 			GraphNode recipientNode = new GraphNode(receiver);
 			recipientNode.connect(senderNode);
 			socialGraph.add(recipientNode);
-		};
+		}
 	}
 
 	/**
