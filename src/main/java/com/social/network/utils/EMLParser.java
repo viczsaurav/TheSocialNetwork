@@ -49,14 +49,13 @@ public class EMLParser {
       
       if (senderEmail.contains(emailMatch) && Utilities.isValidEmail(senderEmail)) {
 				Address[] recipients = mime.getAllRecipients();
-				sender = new Person(senderEmail);
         
         List<String> recipientEmails = new ArrayList<>();
         if(recipients!=null)
           recipientEmails = Arrays.asList(recipients)
                   .stream()
-                  .filter(email -> email.contains(emailMatch))
                   .map(Address::toString)
+									.filter(email -> email.contains(emailMatch))
                   .collect(Collectors.toList());
 
         /**
