@@ -8,56 +8,37 @@ import java.util.*;
  */
 public class Person {
 
-	private String name;
-
+	private String primaryEmail;
 	private Set<String> emails = new HashSet<>();
 
-	public Person(String name, String email){
-		this.name = name;
+	public Person(String email){
+		this.primaryEmail=email;
 		this.emails.add(email);
 	}
 
-	public String getName(){
-		return this.name;
+	public String getPrimaryEmail(){
+		return this.primaryEmail;
 	}
+
 	public Set<String> getEmails() {
 		return Collections.unmodifiableSet(emails);
 	}
   
-	public void mergeEmails(Person node){
-		this.emails.addAll(node.getEmails());
-		node.emails.addAll(this.getEmails());
+	public void mergeEmails(Person newNode){
+		this.emails.addAll(newNode.getEmails());
 	}
 
-	/**
-	 * Create List of person objects when Name and email list provided in same order
-	 * @param emails
-	 * @return
-	 */
-	public static Set<Person> getPersonList(List<String> names, List<String> emails) {
-		List<Person> listOfPersons= new ArrayList<>();
-
-		if(names.size()!= emails.size()){
-			throw new IllegalArgumentException("Mismatch in size of Sets.. " +
-							"namesArray=["+names.size()+"], emailsArray=["+emails.size()+"]");
-		}
-
-		for(int i=0; i< names.size();i++){
-			listOfPersons.add(new Person(names.get(i), emails.get(i)));
-		}
-		return new HashSet<>(listOfPersons);
-	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Person person = (Person) o;
-		return name.equals(person.name);
+		return primaryEmail.equals(person.primaryEmail);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(primaryEmail);
 	}
 }
