@@ -1,6 +1,6 @@
 package com.social.network.model;
 
-import java.util.Objects;
+import java.util.*;
 
 /**
  * This Person class represents a Node in the Social Network graph.
@@ -8,26 +8,37 @@ import java.util.Objects;
  */
 public class Person {
 
-	private String email;
+	private String primaryEmail;
+	private Set<String> emails = new HashSet<>();
 
 	public Person(String email){
-		this.email = email;
+		this.primaryEmail=email;
+		this.emails.add(email);
 	}
 
-	public String getEmail() {
-		return email;
+	public String getPrimaryEmail(){
+		return this.primaryEmail;
 	}
+
+	public Set<String> getEmails() {
+		return Collections.unmodifiableSet(emails);
+	}
+  
+	public void mergeEmails(Person newNode){
+		this.emails.addAll(newNode.getEmails());
+	}
+
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Person person = (Person) o;
-		return email.equals(person.email);
+		return primaryEmail.equals(person.primaryEmail);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(email);
+		return Objects.hash(primaryEmail);
 	}
 }

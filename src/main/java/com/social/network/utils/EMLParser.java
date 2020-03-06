@@ -46,22 +46,23 @@ public class EMLParser {
 			MimeMessage mime = new MimeMessage(null, is);
 
 			String senderEmail = mime.getFrom()[0].toString();
-			if (senderEmail.contains(emailMatch) && Utilities.isValidEmail(senderEmail)) {
+      
+      if (senderEmail.contains(emailMatch) && Utilities.isValidEmail(senderEmail)) {
 				Address[] recipients = mime.getAllRecipients();
-				sender = new Person(senderEmail);
+				this.sender = new Person(senderEmail);
 
-				if(recipients!=null)
-					recipientList = Arrays.asList(recipients)
-									.stream()
-									.map(Address::toString)
+        if(recipients!=null)
+					this.recipientList = Arrays.asList(recipients)
+                  .stream()
+                  .map(Address::toString)
 									.filter(email -> email.contains(emailMatch))
 									.map(email -> new Person(email))
-									.collect(Collectors.toSet());
+                  .collect(Collectors.toSet());
 			}
 		}
 		catch (Exception e){
 			System.out.println("Failed to parse eml file: "+ path +"\n"+ e.getMessage());
-			Utilities.writeToFile(path, "/Users/sverma/Documents/saurav-verma/data/outputs-2/failed-files.txt");
+			Utilities.writeToFile(path, "/Users/sverma/Documents/saurav-verma/data/outputs-2/failed-files-multi-emails.csv");
 		}
 	}
 }
